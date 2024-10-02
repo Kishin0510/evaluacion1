@@ -21,5 +21,27 @@ namespace evaluacion1.Src.Controllers
             _userRepository = userRepository;
         }
 
+        [HttpPost("")]
+        public async Task<IResult> CreateUser(CreateUserDTO userDTO)
+        {
+            var exist = await _userRepository.ExistByRut(userDTO.RUT);
+
+            if (exist)
+            {
+                return TypedResults.Conflict("El RUT ya existe.");
+            } else {
+                var user = new User
+                {
+                RUT = userDTO.RUT,
+                Name = userDTO.Name,
+                Gender = userDTO.Gender,
+                Email = userDTO.Email,
+                Birthdate = userDTO.Birthdate
+                };
+                await _userRepository.CreateUser(user);
+                return TypedResults.Created("Usuario creado exitosamente.");
+            }
+
+        }
     }
 }

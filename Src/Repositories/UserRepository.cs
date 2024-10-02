@@ -2,39 +2,53 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using evaluacion1.Src.Data;
 using evaluacion1.Src.Interfaces;
 using evaluacion1.Src.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace evaluacion1.Src.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public Task<User> CreateUser(User user)
+        private readonly DataContext _context;
+
+        public UserRepository(DataContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<User> DeleteUser(int id)
+        public async Task<bool> CreateUser(User user)
         {
-            throw new NotImplementedException();
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<bool> ExistByRut(string rut)
+        public async Task<bool> DeleteUser(int id)
         {
-            throw new NotImplementedException();
+            var userToDelete = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            _context.Users.Remove(userToDelete);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<User> GetUser(int id)
+        public async Task<bool> ExistByRut(string rut)
         {
-            throw new NotImplementedException();
+            return await _context.Users.AnyAsync(x => x.RUT == rut);
         }
 
-        public Task<IEnumerable<User>> GetUsers()
+        public async Task<User> GetUser(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<User> UpdateUser(int id, User user)
+        public async Task<List<User>> GetUsers()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
+        public async Task<bool> UpdateUser(int id, User user)
         {
             throw new NotImplementedException();
         }

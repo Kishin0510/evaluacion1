@@ -8,11 +8,11 @@ namespace evaluacion1.Src.Interfaces
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<User>> GetUsers();
+        Task<List<User>> GetUsers();
         Task<User> GetUser(int id);
-        Task<User> CreateUser(User user);
-        Task<User> UpdateUser(int id, User user);
-        Task<User> DeleteUser(int id);   
+        Task<bool> CreateUser(User user);
+        Task<bool> UpdateUser(int id, User user);
+        Task<bool> DeleteUser(int id);   
         Task<bool> ExistByRut(string rut);
     }
 }
