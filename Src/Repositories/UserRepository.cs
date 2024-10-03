@@ -43,9 +43,36 @@ namespace evaluacion1.Src.Repositories
             return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<List<User>> GetUserDesOrAsc(string sort)
+        {
+            var users = _context.Users.AsQueryable();
+            users = sort == "asc" ? users.OrderBy(u => u.Name) : users.OrderByDescending(u => u.Name);
+            return await users.ToListAsync();
+        }
+
+        public Task<List<User>> GetUserDesOrAscByGender(string sort, string gender)
+        {
+            var users = _context.Users.AsQueryable();
+            users = users.Where(u => u.Gender == gender);
+            if(sort == "asc")
+            {
+                users = users.OrderBy(u => u.Name);
+            } else {
+                users = users.OrderByDescending(u => u.Name);
+            }
+            return users.ToListAsync();
+        }
+
         public async Task<List<User>> GetUsers()
         {
             return await _context.Users.ToListAsync();
+        }
+
+        public async Task<List<User>> GetUsersByGender(string gender)
+        {
+            var users = _context.Users.AsQueryable();
+            users = users.Where(u => u.Gender == gender);
+            return await users.ToListAsync();
         }
 
         public async Task<bool> UpdateUser(int id, User user)

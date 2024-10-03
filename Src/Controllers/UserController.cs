@@ -43,5 +43,39 @@ namespace evaluacion1.Src.Controllers
             }
 
         }
+
+        [HttpGet("")]
+        public async Task<IResult> GetUsers(string? sort, string? gender)
+        {
+            if (!string.IsNullOrEmpty(sort) && sort != "asc" && sort != "desc")
+            {
+                return TypedResults.BadRequest("El parámetro 'sort' debe ser 'asc' o 'desc'.");
+            }
+
+            if (!string.IsNullOrEmpty(gender) && gender != "masculino" && gender != "femenino" && gender != "otro" && gender != "prefiero no decirlo")
+            {
+                return TypedResults.BadRequest("El parámetro 'gender' debe ser 'masculino', 'femenino', 'otro' o 'prefiero no decirlo'.");
+            }
+
+            var users = new List<User>();
+            if(!string.IsNullOrEmpty(gender) && string.IsNullOrEmpty(sort)) 
+            {
+                users = await _userRepository.GetUsersByGender(gender);
+            }
+            if (!string.IsNullOrEmpty(sort) && string.IsNullOrEmpty(gender))
+            {
+                users = await _userRepository.GetUserDesOrAsc(sort);
+            }
+            if (!string.IsNullOrEmpty(sort) && !string.IsNullOrEmpty(gender))
+            {
+                users = await _userRepository.GetUserDesOrAscByGender(sort, gender);
+            } else {
+                users = await _userRepository.GetUsers();
+            }
+            return TypedResults.Ok(users);
+    
+        }
+
+        
     }
 }

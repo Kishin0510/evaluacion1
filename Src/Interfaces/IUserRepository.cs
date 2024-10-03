@@ -14,5 +14,8 @@ namespace evaluacion1.Src.Interfaces
         Task<bool> UpdateUser(int id, User user);
         Task<bool> DeleteUser(int id);   
         Task<bool> ExistByRut(string rut);
+        Task<List<User>> GetUsersByGender(string gender);
+        Task<List<User>> GetUserDesOrAsc(string sort);
+        Task<List<User>> GetUserDesOrAscByGender(string sort, string gender);
     }
 }
