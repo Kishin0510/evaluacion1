@@ -1,0 +1,101 @@
+{
+	"info": {
+		"_postman_id": "06d32046-11e8-4caa-a1a7-e49f93b078d1",
+		"name": "Evaluacion1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27393212"
+	},
+	"item": [
+		{
+			"name": "CreateUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"RUT\" : \"19.952.185-3\",\r\n    \"Name\" : \"Nicolas\",\r\n    \"Email\" : \"nicolas@gmail.com\",\r\n    \"Gender\" : \"masculino\",\r\n    \"Birthdate\" : \"1998-12-17\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5282/api/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5282",
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchUsers",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sort\" : \"asc\",\r\n    \"gender\" : \"masculino\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5282/api/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5282",
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUser",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sort\" : \"asc\",\r\n    \"gender\" : \"masculino\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5282/api/user/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5282",
+					"path": [
+						"api",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
