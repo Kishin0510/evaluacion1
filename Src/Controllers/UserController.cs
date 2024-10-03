@@ -76,6 +76,17 @@ namespace evaluacion1.Src.Controllers
     
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IResult> DeleteUser(int id)
+        {
+            var user = await _userRepository.GetUser(id);
+            if (user == null)
+            {
+                return TypedResults.NotFound("Usuario no encontrado.");
+            }
+            await _userRepository.DeleteUser(id);
+            return TypedResults.Ok("Usuario eliminado exitosamente.");
+        }
         
     }
 }
